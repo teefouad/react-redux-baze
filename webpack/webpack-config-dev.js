@@ -15,7 +15,7 @@ Object.keys(envConfig).forEach((key) => {
   envConfig[key] = JSON.stringify(process.env[key] || envConfig[key]);
 });
 
-export default {
+module.exports = {
   devtool: 'eval-source-map',
   entry: {
     app: [
@@ -32,9 +32,18 @@ export default {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    new webpack.DefinePlugin({ 'process.env': envConfig })
+    new webpack.DefinePlugin({
+      'process.env': envConfig
+    })
   ],
   module: {
+    preLoaders: [
+      {
+        test: /\.js(x)?$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader'
+      }
+    ],
     loaders: [
       {
         test: /\.js(x)?$/, // Transform all .js/.jsx files required somewhere with Babel
@@ -56,5 +65,6 @@ export default {
       '.jsx'
     ]
   },
-  target: 'web' // Make web variables accessible to webpack, e.g. window
+  target: 'web', // Make web variables accessible to webpack, e.g. window
+  progress: true
 };
