@@ -8,7 +8,7 @@ import hogan from 'hogan-express';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import routes from './routes/index';
+import { devMiddleware, hotMiddleware } from './webpack/webpack-dev-server';
 
 // setup the Express app
 const app = express();
@@ -28,10 +28,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // cookie parser
 app.use(cookieParser());
 
+// include webpack-dev-server for development only
+if (process.env.NODE_ENV !== 'production') {
+  app.use(devMiddleware);
+
+  // allow using Webpack hot reloading
+  app.use(hotMiddleware);
+}
+
 // serve static files from 'public'
 app.use(express.static(path.join(__dirname, './public')));
 
 // handle rendering
-app.use('/', routes);
+app.get('*', (req, res) => {
+  res.render('index');
+});
 
 export default app;

@@ -1,10 +1,12 @@
-import express from 'express';
+import React from 'react';
+import { Route, IndexRoute } from 'react-router';
+import Main from '../app/pages/Main';
+import Homepage from '../app/pages/Homepage';
+import About from '../app/pages/About';
 
-const router = express.Router();
-
-/* GET home page. */
-router.get('/', (req, res) => {
-  res.render('index', { title: 'Express' });
-});
-
-export default router;
+export default (
+  <Route path="/" component={Main}>
+    <IndexRoute component={Homepage} />
+    <Route path="about" component={About} />
+  </Route>
+);
