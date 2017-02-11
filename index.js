@@ -2,6 +2,9 @@
  * Main entry point
  */
 
+// load environment variables for the server
+require('dotenv').config({ silent: true });
+
 // enable es6 for node
 require('./serve.babel');
 

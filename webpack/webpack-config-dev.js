@@ -2,10 +2,20 @@
  * Development Webpack configuration
  */
 
-const path = require('path');
-const webpack = require('webpack');
+import path from 'path';
+import webpack from 'webpack';
+import dotenv from 'dotenv';
 
-module.exports = {
+const envConfig = dotenv.config().parsed || {};
+
+envConfig.CLIENT = true;
+envConfig.SERVER = false;
+
+Object.keys(envConfig).forEach((key) => {
+  envConfig[key] = JSON.stringify(process.env[key] || envConfig[key]);
+});
+
+export default {
   devtool: 'eval-source-map',
   entry: {
     app: [
@@ -21,7 +31,8 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({ 'process.env': envConfig })
   ],
   module: {
     loaders: [
