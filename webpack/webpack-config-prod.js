@@ -2,9 +2,9 @@
  * Development Webpack configuration
  */
 
-import path from 'path';
-import webpack from 'webpack';
-import dotenv from 'dotenv';
+const path = require('path');
+const webpack = require('webpack');
+const dotenv = require('dotenv');
 
 const envConfig = dotenv.config().parsed || {};
 
@@ -15,23 +15,25 @@ Object.keys(envConfig).forEach((key) => {
   envConfig[key] = JSON.stringify(process.env[key] || envConfig[key]);
 });
 
-export default {
-  devtool: 'eval-source-map',
+module.exports = {
+  devtool: 'source-map',
   entry: {
     app: [
       'babel-polyfill',
-      'webpack-hot-middleware/client',
       path.join(process.cwd(), 'app/index')
     ]
   },
   output: {
     filename: 'bundle.js',
-    path: path.join(process.cwd(), 'js'),
-    publicPath: '/js'
+    path: path.join(process.cwd(), 'public/js')
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(true),
+    new webpack.optimize.DedupePlugin(), // Merge all duplicate modules
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
+    }),
     new webpack.DefinePlugin({
       'process.env': envConfig
     })
