@@ -31,4 +31,7 @@ app.use(cookieParser());
 // serve static files from 'public'
 app.use(express.static(path.join(__dirname, './public')));
 
+// handle rendering
+app.use('/', routes);
+
 export default app;
