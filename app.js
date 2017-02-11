@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // cookie parser
 app.use(cookieParser());
 
-// handle rendering
-app.use('/', routes);
+// serve static files from 'public'
+app.use(express.static(path.join(__dirname, './public')));
 
 export default app;
