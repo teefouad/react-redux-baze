@@ -16,6 +16,7 @@ const initialState = {
   shots: [],
   error: false,
   loading: false,
+  page: 1,
 };
 
 // =========================================================================
@@ -29,6 +30,7 @@ export default function reducer(state = initialState, action) {
         ...state,
         error: false,
         loading: true,
+        page: action.payload.page,
       };
 
     case LOAD_SHOTS_SUCCESS:

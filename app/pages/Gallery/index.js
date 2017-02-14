@@ -17,8 +17,16 @@ const Gallery = React.createClass({
     };
   },
 
-  loadShots() {
-    this.props.actions.gallery.loadShots();
+  componentDidMount() {
+    this.props.actions.gallery.loadShots(1);
+  },
+
+  loadPrevShots() {
+    this.props.actions.gallery.loadShots(this.props.gallery.page - 1);
+  },
+
+  loadNextShots() {
+    this.props.actions.gallery.loadShots(this.props.gallery.page + 1);
   },
 
   renderShots() {
@@ -42,7 +50,10 @@ const Gallery = React.createClass({
         {
           this.props.gallery.shots.map(shot => (
             <li key={shot.id}>
-              {shot.title}
+              <img src={shot.images.teaser} alt={shot.title} />
+              <p>
+                {shot.title}
+              </p>
             </li>
           ))
         }
@@ -57,8 +68,12 @@ const Gallery = React.createClass({
           Gallery
         </h1>
 
-        <button onClick={this.loadShots}>
-          Load Shots
+        <button onClick={this.loadPrevShots}>
+          Load Prev Page
+        </button>
+
+        <button onClick={this.loadNextShots}>
+          Load Next Page
         </button>
 
         {
