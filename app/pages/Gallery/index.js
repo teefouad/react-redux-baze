@@ -3,6 +3,7 @@ import connectToStore from '../../connectToStore';
 import reducer from './reducer';
 import * as actions from './actions';
 import * as sagas from './sagas';
+import styles from './styles.css';
 
 const Gallery = React.createClass({
   propTypes: {
@@ -63,7 +64,7 @@ const Gallery = React.createClass({
 
   render() {
     return (
-      <div id="gallery">
+      <div id="gallery" className={styles.app}>
         <h1>
           Gallery
         </h1>

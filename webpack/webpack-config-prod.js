@@ -56,7 +56,12 @@ module.exports = {
         test: /\.json$/,
         exclude: /node_modules/,
         loader: 'json'
-      }
+      },
+      {
+        test: /\.(s)?css$/,
+        exclude: /node_modules/,
+        loader: 'style-loader!css-loader?modules=true&localIdentName=[name]__[local]___[hash:base64:5]!sass-loader',
+      },
     ]
   },
   resolve: {

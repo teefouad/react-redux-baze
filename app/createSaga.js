@@ -1,9 +1,8 @@
-import { takeLatest } from 'redux-saga';
-import { call, put } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 
 export default function createSaga(sagaAction, successAction, failureAction, callback) {
   return function* saga() {
-    yield* takeLatest(sagaAction, function* sagaHandler(action) {
+    yield takeLatest(sagaAction, function* sagaHandler(action) {
       try {
         // get data
         const data = yield call(() => callback(action));

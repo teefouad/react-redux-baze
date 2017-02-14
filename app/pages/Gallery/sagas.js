@@ -6,7 +6,7 @@ import {
   LOAD_SHOTS_FAILURE,
 } from './actions';
 
-export const saga = createSaga(
+export const gallerySaga = createSaga(
   LOAD_SHOTS,
   LOAD_SHOTS_SUCCESS,
   LOAD_SHOTS_FAILURE,
