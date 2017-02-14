@@ -3,7 +3,9 @@
 // =========================================================================
 
 import {
-  SAY_SOMETHING,
+  LOAD_SHOTS,
+  LOAD_SHOTS_SUCCESS,
+  LOAD_SHOTS_FAILURE,
 } from './actions';
 
 // =========================================================================
@@ -11,8 +13,9 @@ import {
 // =========================================================================
 
 const initialState = {
-  msg: 'Hello Redux!',
-  alreadySaidSomething: false,
+  shots: [],
+  error: false,
+  loading: false,
 };
 
 // =========================================================================
@@ -21,16 +24,26 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case SAY_SOMETHING:
-      if (state.alreadySaidSomething === true) {
-        alert('I have already said something!');
-      } else {
-        alert(state.msg);
-      }
-
+    case LOAD_SHOTS:
       return {
         ...state,
-        alreadySaidSomething: true,
+        error: false,
+        loading: true,
+      };
+
+    case LOAD_SHOTS_SUCCESS:
+      return {
+        ...state,
+        shots: action.payload.data,
+        error: false,
+        loading: false,
+      };
+
+    case LOAD_SHOTS_FAILURE:
+      return {
+        ...state,
+        error: true,
+        loading: false,
       };
 
     default:

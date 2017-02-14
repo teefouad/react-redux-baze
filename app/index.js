@@ -4,7 +4,8 @@ import { Router, browserHistory } from 'react-router';
 import { createStore, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore, routerMiddleware, routerReducer } from 'react-router-redux';
-import { registerReducer, getRootReducer } from './connectToStore';
+import createSagaMiddleware from 'redux-saga';
+import { registerReducer, getRootReducer, getSagas } from './connectToStore';
 import routes from '../routes';
 
 if (module.hot) {
@@ -22,11 +23,21 @@ registerReducer('routing', routerReducer);
 // create the routing middleware
 const routingMiddleware = routerMiddleware(browserHistory);
 
+// create the saga middleware
+const sagaMiddleware = createSagaMiddleware({
+  logger: (level, ...args) => {
+    if (level === 'error') {
+      console.log(`Error: ${args.join(' ')}`);
+    }
+  }
+});
+
 // create the store
 export const store = createStore(
   getRootReducer(),
   compose(
     applyMiddleware(routingMiddleware),
+    applyMiddleware(sagaMiddleware),
     enhancers
   )
 );
@@ -45,6 +56,10 @@ const MainApp = (
 
 // reducers are registered by now, so update the root reducer
 store.replaceReducer(getRootReducer());
+
+// then run the sagas
+const sagas = getSagas();
+Object.values(sagas).forEach(saga => sagaMiddleware.run(saga));
 
 // render everything
 render(MainApp, document.getElementById('root'));
