@@ -118,7 +118,7 @@ export default function connectToStore(
   const sagas = config.sagas || {};
 
   // default value for the stateKey null (component is stateless).
-  const stateKey = config.stateKey || null;
+  const stateKey = config.stateKey || (component.displayName && component.displayName.toLowerCase()) || null;
 
   // default value for the actionsKey is stateKey (more convenient).
   const actionsKey = config.actionsKey || stateKey;

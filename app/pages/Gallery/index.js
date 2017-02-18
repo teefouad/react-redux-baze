@@ -85,4 +85,4 @@ const Gallery = React.createClass({
   }
 });
 
-export default connectToStore(Gallery, { reducer, actions, sagas, stateKey: 'gallery' });
+export default connectToStore(Gallery, { reducer, actions, sagas });

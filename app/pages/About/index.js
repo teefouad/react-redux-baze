@@ -5,7 +5,7 @@ import * as actions from './actions';
 import * as sagas from './sagas';
 import styles from './styles.css';
 
-const Gallery = React.createClass({
+const About = React.createClass({
   propTypes: {
     about: React.PropTypes.object,
     actions: React.PropTypes.object,
@@ -85,4 +85,4 @@ const Gallery = React.createClass({
   }
 });
 
-export default connectToStore(Gallery, { reducer, actions, sagas, stateKey: 'about' });
+export default connectToStore(About, { reducer, actions, sagas });
