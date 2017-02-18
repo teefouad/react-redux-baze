@@ -10,6 +10,7 @@ const Main = React.createClass({
     return (
       <div id="main">
         <Link to="/">Homepage</Link>
+        <Link to="/about">About</Link>
         <Link to="/gallery">Gallery</Link>
         {
           this.props.children && React.cloneElement(this.props.children, { ...this.props })

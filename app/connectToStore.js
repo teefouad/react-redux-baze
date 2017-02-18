@@ -130,10 +130,9 @@ export default function connectToStore(
 
   // register sagas
   if (sagas) {
-    registeredSagas = {
-      ...registeredSagas,
-      ...sagas
-    };
+    Object.keys(sagas).forEach(sagaName => {
+      registeredSagas[sagaName + '_' + stateKey] = sagas[sagaName];
+    });
   }
 
   // maps component state to component props
